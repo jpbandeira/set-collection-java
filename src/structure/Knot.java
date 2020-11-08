@@ -1,6 +1,7 @@
 package structure;
 
 public class Knot {
+    private Knot dad;
     private Knot right;
     private Knot left;
     private Integer value;
@@ -9,6 +10,7 @@ public class Knot {
     public Knot(Integer value) {
         this.right = null;
         this.left = null;
+        this.dad = null;
         this.value = value;
         this.balancing = 0;
     }
@@ -43,5 +45,13 @@ public class Knot {
 
     public void setBalancing(Integer balancing) {
         this.balancing = balancing;
+    }
+
+    public Knot getDad() {
+        return dad;
+    }
+
+    public void setDad(Knot dad) {
+        this.dad = dad;
     }
 }
