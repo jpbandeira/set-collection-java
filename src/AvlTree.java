@@ -2,44 +2,44 @@ import java.util.ArrayList;
 
 public class AvlTree {
 
-  protected No raiz;
+  protected No root;
 
-	public boolean inserir(int k) {
+	public boolean insert(int k) {
 		No n = new No(k);
-		return inserirAVL(this.raiz, n);
+		return insertAVL(this.root, n);
 	}
 
 	@Override
 	public String toString() {
-		return "AvlTree [raiz=" + raiz + "]";
+		return "AvlTree [root=" + root + "]";
 	}
 
-	public boolean inserirAVL(No aComparar, No aInserir) {
+	public boolean insertAVL(No toCompare, No toInsert) {
 
-		if (aComparar == null) {
-			this.raiz = aInserir;
+		if (toCompare == null) {
+			this.root = toInsert;
 		} else {
 
-			if (aInserir.getKey() < aComparar.getKey()) {
+			if (toInsert.getKey() < toCompare.getKey()) {
 
-				if (aComparar.getLeft() == null) {
-					aComparar.setLeft(aInserir);
-					aInserir.setRoot(aComparar);
-					verificarBalanceamento(aComparar);
+				if (toCompare.getLeft() == null) {
+					toCompare.setLeft(toInsert);
+					toInsert.setRoot(toCompare);
+					verifyBalancing(toCompare);
 
 				} else {
-					inserirAVL(aComparar.getLeft(), aInserir);
+					insertAVL(toCompare.getLeft(), toInsert);
 				}
 
-			} else if (aInserir.getKey() > aComparar.getKey()) {
+			} else if (toInsert.getKey() > toCompare.getKey()) {
 
-				if (aComparar.getRight() == null) {
-					aComparar.setRight(aInserir);
-					aInserir.setRoot(aComparar);
-					verificarBalanceamento(aComparar);
+				if (toCompare.getRight() == null) {
+					toCompare.setRight(toInsert);
+					toInsert.setRoot(toCompare);
+					verifyBalancing(toCompare);
 
 				} else {
-					inserirAVL(aComparar.getRight(), aInserir);
+					insertAVL(toCompare.getRight(), toInsert);
 				}
 				
 			} else {
@@ -49,73 +49,73 @@ public class AvlTree {
 		return true;
 	}
 
-	public void verificarBalanceamento(No atual) {
-		setBalanceamento(atual);
-		int balanceamento = atual.getBalancing();
+	public void verifyBalancing(No current) {
+		setBalancing(current);
+		int balancing = current.getBalancing();
 
-		if (balanceamento == -2) {
+		if (balancing == -2) {
 
-			if (altura(atual.getLeft().getLeft()) >= altura(atual.getLeft().getRight())) {
-				atual = rotacaoDireita(atual);
+			if (height(current.getLeft().getLeft()) >= height(current.getLeft().getRight())) {
+				current = rotationRight(current);
 
 			} else {
-				atual = duplaRotacaoEsquerdaDireita(atual);
+				current = doubleRotatinLeftRight(current);
 			}
 
-		} else if (balanceamento == 2) {
+		} else if (balancing == 2) {
 
-			if (altura(atual.getRight().getRight()) >= altura(atual.getRight().getLeft())) {
-				atual = rotacaoEsquerda(atual);
+			if (height(current.getRight().getRight()) >= height(current.getRight().getLeft())) {
+				current = rotationLeft(current);
 
 			} else {
-				atual = duplaRotacaoDireitaEsquerda(atual);
+				current = doubleRotationRightLeft(current);
 			}
 		}
 
-		if (atual.getRoot() != null) {
-			verificarBalanceamento(atual.getRoot());
+		if (current.getRoot() != null) {
+			verifyBalancing(current.getRoot());
 		} else {
-			this.raiz = atual;
+			this.root = current;
 		}
 	}
 
-	public void remover(int k) {
-		removerAVL(this.raiz, k);
+	public void remove(int k) {
+		removeAVL(this.root, k);
 	}
 
-	public void removerAVL(No atual, int k) {
-		if (atual == null) {
+	public void removeAVL(No current, int k) {
+		if (current == null) {
 			return;
 
 		} else {
 
-			if (atual.getKey() > k) {
-				removerAVL(atual.getLeft(), k);
+			if (current.getKey() > k) {
+				removeAVL(current.getLeft(), k);
 
-			} else if (atual.getKey() < k) {
-				removerAVL(atual.getRight(), k);
+			} else if (current.getKey() < k) {
+				removeAVL(current.getRight(), k);
 
-			} else if (atual.getKey() == k) {
-				removerNoEncontrado(atual);
+			} else if (current.getKey() == k) {
+				removeKnotFounded(current);
 			}
 		}
 	}
 
-	public void removerNoEncontrado(No aRemover) {
+	public void removeKnotFounded(No toRemove) {
 		No r;
 
-		if (aRemover.getLeft() == null || aRemover.getRight() == null) {
+		if (toRemove.getLeft() == null || toRemove.getRight() == null) {
 
-			if (aRemover.getRoot() == null) {
-				this.raiz = null;
-				aRemover = null;
+			if (toRemove.getRoot() == null) {
+				this.root = null;
+				toRemove = null;
 				return;
 			}
-			r = aRemover;
+			r = toRemove;
 
 		} else {
-			r = sucessor(aRemover);
-			aRemover.setKey(r.getKey());
+			r = next(toRemove);
+			toRemove.setKey(r.getKey());
 		}
 
 		No p;
@@ -130,89 +130,89 @@ public class AvlTree {
 		}
 
 		if (r.getRoot() == null) {
-			this.raiz = p;
+			this.root = p;
 		} else {
 			if (r == r.getRoot().getLeft()) {
 				r.getRoot().setLeft(p);
 			} else {
 				r.getRoot().setRight(p);
 			}
-			verificarBalanceamento(r.getRoot());
+			verifyBalancing(r.getRoot());
 		}
 		r = null;
 	}
 
-	public No rotacaoEsquerda(No inicial) {
+	public No rotationLeft(No initial) {
 
-		No direita = inicial.getRight();
-		direita.setRoot(inicial.getRoot());
+		No right = initial.getRight();
+		right.setRoot(initial.getRoot());
 
-		inicial.setRight(direita.getLeft());
+		initial.setRight(right.getLeft());
 
-		if (inicial.getRight() != null) {
-			inicial.getRight().setRoot(inicial);
+		if (initial.getRight() != null) {
+			initial.getRight().setRoot(initial);
 		}
 
-		direita.setLeft(inicial);
-		inicial.setRoot(direita);
+		right.setLeft(initial);
+		initial.setRoot(right);
 
-		if (direita.getRoot() != null) {
+		if (right.getRoot() != null) {
 
-			if (direita.getRoot().getRight() == inicial) {
-				direita.getRoot().setRight(direita);
+			if (right.getRoot().getRight() == initial) {
+				right.getRoot().setRight(right);
 			
-			} else if (direita.getRoot().getLeft() == inicial) {
-				direita.getRoot().setLeft(direita);
+			} else if (right.getRoot().getLeft() == initial) {
+				right.getRoot().setLeft(right);
 			}
 		}
 
-		setBalanceamento(inicial);
-		setBalanceamento(direita);
+		setBalancing(initial);
+		setBalancing(right);
 
-		return direita;
+		return right;
 	}
 
-	public No rotacaoDireita(No inicial) {
+	public No rotationRight(No initial) {
 
-		No esquerda = inicial.getLeft();
-		esquerda.setRoot(inicial.getRoot());
+		No left = initial.getLeft();
+		left.setRoot(initial.getRoot());
 
-		inicial.setLeft(esquerda.getRight());
+		initial.setLeft(left.getRight());
 
-		if (inicial.getLeft() != null) {
-			inicial.getLeft().setRoot(inicial);
+		if (initial.getLeft() != null) {
+			initial.getLeft().setRoot(initial);
 		}
 
-		esquerda.setRight(inicial);
-		inicial.setRoot(esquerda);
+		left.setRight(initial);
+		initial.setRoot(left);
 
-		if (esquerda.getRoot() != null) {
+		if (left.getRoot() != null) {
 
-			if (esquerda.getRoot().getRight() == inicial) {
-				esquerda.getRoot().setRight(esquerda);
+			if (left.getRoot().getRight() == initial) {
+				left.getRoot().setRight(left);
 			
-			} else if (esquerda.getRoot().getLeft() == inicial) {
-				esquerda.getRoot().setLeft(esquerda);
+			} else if (left.getRoot().getLeft() == initial) {
+				left.getRoot().setLeft(left);
 			}
 		}
 
-		setBalanceamento(inicial);
-		setBalanceamento(esquerda);
+		setBalancing(initial);
+		setBalancing(left);
 
-		return esquerda;
+		return left;
 	}
 
-	public No duplaRotacaoEsquerdaDireita(No inicial) {
-		inicial.setLeft(rotacaoEsquerda(inicial.getLeft()));
-		return rotacaoDireita(inicial);
+	public No doubleRotatinLeftRight(No initial) {
+		initial.setLeft(rotationLeft(initial.getLeft()));
+		return rotationRight(initial);
 	}
 
-	public No duplaRotacaoDireitaEsquerda(No inicial) {
-		inicial.setRight(rotacaoDireita(inicial.getRight()));
-		return rotacaoEsquerda(inicial);
+	public No doubleRotationRightLeft(No initial) {
+		initial.setRight(rotationRight(initial.getRight()));
+		return rotationLeft(initial);
 	}
 
-	public No sucessor(No q) {
+	public No next(No q) {
 		if (q.getRight() != null) {
 			No r = q.getRight();
 			while (r.getLeft() != null) {
@@ -229,32 +229,32 @@ public class AvlTree {
 		}
 	}
 
-	private int altura(No atual) {
-		if (atual == null) {
+	private int height(No current) {
+		if (current == null) {
 			return -1;
 		}
 
-		if (atual.getLeft() == null && atual.getRight() == null) {
+		if (current.getLeft() == null && current.getRight() == null) {
 			return 0;
 		
-		} else if (atual.getLeft() == null) {
-			return 1 + altura(atual.getRight());
+		} else if (current.getLeft() == null) {
+			return 1 + height(current.getRight());
 		
-		} else if (atual.getRight() == null) {
-			return 1 + altura(atual.getLeft());
+		} else if (current.getRight() == null) {
+			return 1 + height(current.getLeft());
 		
 		} else {
-			return 1 + Math.max(altura(atual.getLeft()), altura(atual.getRight()));
+			return 1 + Math.max(height(current.getLeft()), height(current.getRight()));
 		}
 	}
 
-	private void setBalanceamento(No no) {
-		no.setBalancing(altura(no.getRight()) - altura(no.getLeft()));
+	private void setBalancing(No no) {
+		no.setBalancing(height(no.getRight()) - height(no.getLeft()));
 	}
 
 	final protected ArrayList<No> inorder() {
 		ArrayList<No> ret = new ArrayList<No>();
-		inorder(raiz, ret);
+		inorder(root, ret);
 		return ret;
 	}
 
@@ -269,34 +269,34 @@ public class AvlTree {
 	
 	 public void preOrdem()
 	 {
-	     preOrdemAjudante( raiz );
+		 preOrdemFind( root );
 	 }
 
-	 public void preOrdemAjudante( No no )
+	 public void preOrdemFind( No no )
 	 {
 	      if( no == null )
 	       return;
 
 	      System.out.println( no.getKey() + "" );
 
-	      preOrdemAjudante( no.getLeft() );
+		 preOrdemFind( no.getLeft() );
 
-	      preOrdemAjudante( no.getRight() );
+		 preOrdemFind( no.getRight() );
 	  }
 
-	public boolean buscarAVL(No atual, int k) {
-		No knot = atual;
+	public boolean findAVL(No current, int k) {
+		No knot = current;
 
-		if (atual == null) {
-			knot = raiz;
+		if (current == null) {
+			knot = root;
 
 		}
 
 			if (knot.getKey() > k) {
-				return knot.getLeft() != null ? buscarAVL(knot.getLeft(), k) : false;
+				return knot.getLeft() != null ? findAVL(knot.getLeft(), k) : false;
 
 			} else if (knot.getKey() < k) {
-				return knot.getRight() != null ? buscarAVL(knot.getRight(), k) : false;
+				return knot.getRight() != null ? findAVL(knot.getRight(), k) : false;
 
 			} else if (knot.getKey() == k) {
 				return true;

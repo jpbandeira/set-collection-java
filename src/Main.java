@@ -35,22 +35,6 @@ public class Main {
 		System.out.println(alvT.contains(3));
 		long tempoFinal = System.currentTimeMillis();
 
-		Date calendar = new Date(tempoInicial);
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(calendar);
-		System.out.println(cal);
-
-		System.out.println();
-		System.out.println(tempoFinal);
 		System.out.println(tempoInicial - tempoFinal);
- /*
-    	AvlTree s = new AvlTree();
-    	s.inserir(2);
-    	s.inserir(3);
-    	s.inserir(4);
-    	s.inserir(5);
-    	s.inserir(6);
-    	s.inserir(5);
-    	s.preOrdem();*/
     }
 }
