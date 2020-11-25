@@ -19,6 +19,8 @@ public class Main {
 
         System.out.println(stringSet.toString());
         */
+		Util util = new Util();
+		Long initial = util.analiseStart();
 		long tempoInicial = System.currentTimeMillis();
 		AvlSet<Integer> alvT = new AvlSet<>();
 
@@ -33,8 +35,6 @@ public class Main {
 
 		alvT.print();
 		System.out.println(alvT.contains(3));
-		long tempoFinal = System.currentTimeMillis();
-
-		System.out.println(tempoInicial - tempoFinal);
+		util.analiseEnd(initial);
     }
 }
