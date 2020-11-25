@@ -1,60 +1,60 @@
 public class No {
   
-	private No esquerda;
-	private No direita;
-	private No pai;
-	private int chave;
-	private int balanceamento;
+	private No left;
+	private No right;
+	private No root;
+	private int key;
+	private int balancing;
 
 	public No(int k) {
-		setEsquerda(setDireita(setPai(null)));
-		setBalanceamento(0);
-		setChave(k);
+		setLeft(setRight(setRoot(null)));
+		setBalancing(0);
+		setKey(k);
 	}
 
 	public String toString() {
-		return Integer.toString(getChave());
+		return Integer.toString(getKey());
 	}
 
-	public int getChave() {
-		return chave;
+	public int getKey() {
+		return key;
 	}
 
-	public void setChave(int chave) {
-		this.chave = chave;
+	public void setKey(int key) {
+		this.key = key;
 	}
 
-	public int getBalanceamento() {
-		return balanceamento;
+	public int getBalancing() {
+		return balancing;
 	}
 
-	public void setBalanceamento(int balanceamento) {
-		this.balanceamento = balanceamento;
+	public void setBalancing(int balancing) {
+		this.balancing = balancing;
 	}
 
-	public No getPai() {
-		return pai;
+	public No getRoot() {
+		return root;
 	}
 
-	public No setPai(No pai) {
-		this.pai = pai;
-		return pai;
+	public No setRoot(No root) {
+		this.root = root;
+		return root;
 	}
 
-	public No getDireita() {
-		return direita;
+	public No getRight() {
+		return right;
 	}
 
-	public No setDireita(No direita) {
-		this.direita = direita;
-		return direita;
+	public No setRight(No right) {
+		this.right = right;
+		return right;
 	}
 
-	public No getEsquerda() {
-		return esquerda;
+	public No getLeft() {
+		return left;
 	}
 
-	public void setEsquerda(No esquerda) {
-		this.esquerda = esquerda;
+	public void setLeft(No left) {
+		this.left = left;
 	}
 }
