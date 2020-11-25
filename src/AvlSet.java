@@ -1,11 +1,12 @@
 public class AvlSet<V> extends AvlTree {
 
-    public void add(V value){
+    public boolean add(V value){
         try {
-            System.out.println(this.insert((Integer) value));
+            return this.insert((Integer) value);
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void remove(V value) {
@@ -28,4 +29,5 @@ public class AvlSet<V> extends AvlTree {
     public void print() {
         this.preOrdem();
     }
+    
 }
