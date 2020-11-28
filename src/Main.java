@@ -1,26 +1,46 @@
 public class Main {
     public static void main(String[] args) {
-    	
+
+        int n = 1000, max = 1000, min = 0;
+
     	// 1000, 10000, 100000, 1000000
     	// add - remove - contains
     	
-    	AvlSet<Integer> alvT = new AvlSet<>();
-    	int n = 1000000, max = 1000000, min = 0;
-    	
+    	/*AvlSet<Integer> alvT = new AvlSet<>();
+
     	for (int i = 0; i < n; i++) {
     		alvT.add((int) (Math.random() * (max - min + 1) + min)); 
     	}
     	
     	for (int i = 0; i < n; i++) {
     		int p = (int) (Math.random() * (max - min + 1) + min);
-    		if (alvT.contains(p)) {
-    			alvT.remove(p);
-    		}
+    		if (alvT.contains(p)) alvT.remove(p);
     	}
     	
-    	alvT.print();
-    	
-		
+    	alvT.print();*/
+
+        Set<Integer> set = new Set<>();
+
+        for (int i = 0; i < n; i++) {
+            set.add((int) (Math.random() * (max - min + 1) + min));
+        }
+
+        for (int i = 0; i < n; i++) {
+            int p = (int) (Math.random() * (max - min + 1) + min);
+            if(set.contains(p)) set.remove(p);
+        }
+
+        OrderedSet<Integer> orderedSet = new OrderedSet<>();
+
+        for (int i = 0; i < n; i++) {
+            orderedSet.add((int) (Math.random() * (max - min + 1) + min));
+        }
+
+        for (int i = 0; i < n; i++) {
+            int p = (int) (Math.random() * (max - min + 1) + min);
+            if(orderedSet.contains(p)) orderedSet.remove(p);
+        }
+
 		/*
 		OrderedSet<Integer> orderedSet = new OrderedSet<>();
 		orderedSet.add(3);

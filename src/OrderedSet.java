@@ -10,7 +10,7 @@ public class OrderedSet<V> {
 	public boolean add(V value) {
     	if (!vList.contains(value)) {
     		vList.add(value);
-    		Collections.sort((List<Integer>)vList);
+    		Collections.sort((List<Integer>)vList); //nLog(n)
     		return true;
     	} else {
     		return false;
