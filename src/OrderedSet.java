@@ -1,13 +1,16 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Set<V> {
+public class OrderedSet<V> {
 
     private final List<V> vList = new ArrayList<>();
 
-    public boolean add(V value) {
+    @SuppressWarnings("unchecked")
+	public boolean add(V value) {
     	if (!vList.contains(value)) {
     		vList.add(value);
+    		Collections.sort((List<Integer>)vList); //nLog(n)
     		return true;
     	} else {
     		return false;
@@ -34,10 +37,10 @@ public class Set<V> {
     public int size () {
     	return vList.size();
     }
-
+ 
 	@Override
 	public String toString() {
-		return "Set = " + vList ;
+		return "OrderedSet = " + vList ;
 	}
     
 }

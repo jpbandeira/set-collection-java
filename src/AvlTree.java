@@ -1,265 +1,308 @@
-import structure.Knot;
-
 import java.util.ArrayList;
 
 public class AvlTree {
-    protected Knot raiz;
 
-    public void inserir(int k) {
-        Knot n = new Knot(k);
-        inserirAVL(this.raiz, n);
-    }
+  protected No root;
 
-    public void inserirAVL(Knot aComparar, Knot aInserir) {
+	public boolean insert(int k) {
+		No n = new No(k);
+		return insertAVL(this.root, n);
+	}
 
-        if (aComparar == null) {
-            this.raiz = aInserir;
+	@Override
+	public String toString() {
+		return "AvlTree [root=" + root + "]";
+	}
 
-        } else {
+	public boolean insertAVL(No toCompare, No toInsert) {
 
-            if (aInserir.getValue() < aComparar.getValue()) {
+		if (toCompare == null) {
+			this.root = toInsert;
+		} else {
 
-                if (aComparar.getLeft() == null) {
-                    aComparar.setLeft(aInserir);
-                    aInserir.setDad(aComparar);
-                    verificarBalanceamento(aComparar);
+			if (toInsert.getKey() < toCompare.getKey()) {
 
-                } else {
-                    inserirAVL(aComparar.getLeft(), aInserir);
-                }
+				if (toCompare.getLeft() == null) {
+					toCompare.setLeft(toInsert);
+					toInsert.setRoot(toCompare);
+					verifyBalancing(toCompare);
 
-            } else if (aInserir.getValue() > aComparar.getValue()) {
+				} else {
+					insertAVL(toCompare.getLeft(), toInsert);
+				}
 
-                if (aComparar.getRight() == null) {
-                    aComparar.setRight(aInserir);
-                    aInserir.setDad(aComparar);
-                    verificarBalanceamento(aComparar);
+			} else if (toInsert.getKey() > toCompare.getKey()) {
 
-                } else {
-                    inserirAVL(aComparar.getRight(), aInserir);
-                }
+				if (toCompare.getRight() == null) {
+					toCompare.setRight(toInsert);
+					toInsert.setRoot(toCompare);
+					verifyBalancing(toCompare);
 
-            } else {
-                // O nó já existe
-            }
-        }
-    }
+				} else {
+					insertAVL(toCompare.getRight(), toInsert);
+				}
+				
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
 
-    public void verificarBalanceamento(Knot atual) {
-        setBalancing(atual);
-        int balanceamento = atual.getBalancing();
+	public void verifyBalancing(No current) {
+		setBalancing(current);
+		int balancing = current.getBalancing();
 
-        if (balanceamento == -2) {
+		if (balancing == -2) {
 
-            if (altura(atual.getLeft().getLeft()) >= altura(atual.getLeft().getRight())) {
-                atual = rotacaoDireita(atual);
+			if (height(current.getLeft().getLeft()) >= height(current.getLeft().getRight())) {
+				current = rotationRight(current);
 
-            } else {
-                atual = duplaRotacaoEsquerdaDireita(atual);
-            }
+			} else {
+				current = doubleRotatinLeftRight(current);
+			}
 
-        } else if (balanceamento == 2) {
+		} else if (balancing == 2) {
 
-            if (altura(atual.getRight().getRight()) >= altura(atual.getRight().getLeft())) {
-                atual = rotacaoEsquerda(atual);
+			if (height(current.getRight().getRight()) >= height(current.getRight().getLeft())) {
+				current = rotationLeft(current);
 
-            } else {
-                atual = duplaRotacaoDireitaEsquerda(atual);
-            }
-        }
+			} else {
+				current = doubleRotationRightLeft(current);
+			}
+		}
 
-        if (atual.getDad() != null) {
-            verificarBalanceamento(atual.getDad());
-        } else {
-            this.raiz = atual;
-        }
-    }
+		if (current.getRoot() != null) {
+			verifyBalancing(current.getRoot());
+		} else {
+			this.root = current;
+		}
+	}
 
-    public void remover(int k) {
-        removerAVL(this.raiz, k);
-    }
+	public void remove(int k) {
+		removeAVL(this.root, k);
+	}
 
-    public void removerAVL(Knot atual, int k) {
-        if (atual == null) {
-            return;
+	public void removeAVL(No current, int k) {
+		if (current == null) {
+			return;
 
-        } else {
+		} else {
 
-            if (atual.getValue() > k) {
-                removerAVL(atual.getLeft(), k);
+			if (current.getKey() > k) {
+				removeAVL(current.getLeft(), k);
 
-            } else if (atual.getValue() < k) {
-                removerAVL(atual.getRight(), k);
+			} else if (current.getKey() < k) {
+				removeAVL(current.getRight(), k);
 
-            } else if (atual.getValue() == k) {
-                removerNoEncontrado(atual);
-            }
-        }
-    }
+			} else if (current.getKey() == k) {
+				removeKnotFounded(current);
+			}
+		}
+	}
 
-    public void removerNoEncontrado(Knot aRemover) {
-        Knot r;
+	public void removeKnotFounded(No toRemove) {
+		No r;
 
-        if (aRemover.getLeft() == null || aRemover.getRight() == null) {
+		if (toRemove.getLeft() == null || toRemove.getRight() == null) {
 
-            if (aRemover.getDad() == null) {
-                this.raiz = null;
-                aRemover = null;
-                return;
-            }
-            r = aRemover;
+			if (toRemove.getRoot() == null) {
+				this.root = null;
+				toRemove = null;
+				return;
+			}
+			r = toRemove;
 
-        } else {
-            r = sucessor(aRemover);
-            aRemover.setValue(r.getValue());
-        }
+		} else {
+			r = next(toRemove);
+			toRemove.setKey(r.getKey());
+		}
 
-        Knot p;
-        if (r.getLeft() != null) {
-            p = r.getLeft();
-        } else {
-            p = r.getRight();
-        }
+		No p;
+		if (r.getLeft() != null) {
+			p = r.getLeft();
+		} else {
+			p = r.getRight();
+		}
 
-        if (p != null) {
-            p.setDad(r.getDad());
-        }
+		if (p != null) {
+			p.setRoot(r.getRoot());
+		}
 
-        if (r.getDad() == null) {
-            this.raiz = p;
-        } else {
-            if (r == r.getDad().getLeft()) {
-                r.getDad().setLeft(p);
-            } else {
-                r.getDad().setRight(p);
-            }
-            verificarBalanceamento(r.getDad());
-        }
-        r = null;
-    }
+		if (r.getRoot() == null) {
+			this.root = p;
+		} else {
+			if (r == r.getRoot().getLeft()) {
+				r.getRoot().setLeft(p);
+			} else {
+				r.getRoot().setRight(p);
+			}
+			verifyBalancing(r.getRoot());
+		}
+		r = null;
+	}
 
-    public Knot rotacaoEsquerda(Knot inicial) {
+	public No rotationLeft(No initial) {
 
-        Knot direita = inicial.getRight();
-        direita.setDad(inicial.getDad());
+		No right = initial.getRight();
+		right.setRoot(initial.getRoot());
 
-        inicial.setRight(direita.getLeft());
+		initial.setRight(right.getLeft());
 
-        if (inicial.getRight() != null) {
-            inicial.getRight().setDad(inicial);
-        }
+		if (initial.getRight() != null) {
+			initial.getRight().setRoot(initial);
+		}
 
-        direita.setLeft(inicial);
-        inicial.setDad(direita);
+		right.setLeft(initial);
+		initial.setRoot(right);
 
-        if (direita.getDad() != null) {
+		if (right.getRoot() != null) {
 
-            if (direita.getDad().getRight() == inicial) {
-                direita.getDad().setRight(direita);
+			if (right.getRoot().getRight() == initial) {
+				right.getRoot().setRight(right);
+			
+			} else if (right.getRoot().getLeft() == initial) {
+				right.getRoot().setLeft(right);
+			}
+		}
 
-            } else if (direita.getDad().getLeft() == inicial) {
-                direita.getDad().setLeft(direita);
-            }
-        }
+		setBalancing(initial);
+		setBalancing(right);
 
-        setBalancing(inicial);
-        setBalancing(direita);
+		return right;
+	}
 
-        return direita;
-    }
+	public No rotationRight(No initial) {
 
-    public Knot rotacaoDireita(Knot inicial) {
+		No left = initial.getLeft();
+		left.setRoot(initial.getRoot());
 
-        Knot esquerda = inicial.getLeft();
-        esquerda.setDad(inicial.getDad());
+		initial.setLeft(left.getRight());
 
-        inicial.setLeft(esquerda.getRight());
+		if (initial.getLeft() != null) {
+			initial.getLeft().setRoot(initial);
+		}
 
-        if (inicial.getLeft() != null) {
-            inicial.getLeft().setDad(inicial);
-        }
+		left.setRight(initial);
+		initial.setRoot(left);
 
-        esquerda.setRight(inicial);
-        inicial.setDad(esquerda);
+		if (left.getRoot() != null) {
 
-        if (esquerda.getDad() != null) {
+			if (left.getRoot().getRight() == initial) {
+				left.getRoot().setRight(left);
+			
+			} else if (left.getRoot().getLeft() == initial) {
+				left.getRoot().setLeft(left);
+			}
+		}
 
-            if (esquerda.getDad().getRight() == inicial) {
-                esquerda.getDad().setRight(esquerda);
+		setBalancing(initial);
+		setBalancing(left);
 
-            } else if (esquerda.getDad().getLeft() == inicial) {
-                esquerda.getDad().setLeft(esquerda);
-            }
-        }
+		return left;
+	}
 
-        setBalancing(inicial);
-        setBalancing(esquerda);
+	public No doubleRotatinLeftRight(No initial) {
+		initial.setLeft(rotationLeft(initial.getLeft()));
+		return rotationRight(initial);
+	}
 
-        return esquerda;
-    }
+	public No doubleRotationRightLeft(No initial) {
+		initial.setRight(rotationRight(initial.getRight()));
+		return rotationLeft(initial);
+	}
 
-    public Knot duplaRotacaoEsquerdaDireita(Knot inicial) {
-        inicial.setLeft(rotacaoEsquerda(inicial.getLeft()));
-        return rotacaoDireita(inicial);
-    }
+	public No next(No q) {
+		if (q.getRight() != null) {
+			No r = q.getRight();
+			while (r.getLeft() != null) {
+				r = r.getLeft();
+			}
+			return r;
+		} else {
+			No p = q.getRoot();
+			while (p != null && q == p.getRight()) {
+				q = p;
+				p = q.getRoot();
+			}
+			return p;
+		}
+	}
 
-    public Knot duplaRotacaoDireitaEsquerda(Knot inicial) {
-        inicial.setRight(rotacaoDireita(inicial.getRight()));
-        return rotacaoEsquerda(inicial);
-    }
+	private int height(No current) {
+		if (current == null) {
+			return -1;
+		}
 
-    public Knot sucessor(Knot q) {
-        if (q.getRight() != null) {
-            Knot r = q.getRight();
-            while (r.getLeft() != null) {
-                r = r.getLeft();
-            }
-            return r;
-        } else {
-            Knot p = q.getDad();
-            while (p != null && q == p.getRight()) {
-                q = p;
-                p = q.getDad();
-            }
-            return p;
-        }
-    }
+		if (current.getLeft() == null && current.getRight() == null) {
+			return 0;
+		
+		} else if (current.getLeft() == null) {
+			return 1 + height(current.getRight());
+		
+		} else if (current.getRight() == null) {
+			return 1 + height(current.getLeft());
+		
+		} else {
+			return 1 + Math.max(height(current.getLeft()), height(current.getRight()));
+		}
+	}
 
-    private int altura(Knot atual) {
-        if (atual == null) {
-            return -1;
-        }
+	private void setBalancing(No no) {
+		no.setBalancing(height(no.getRight()) - height(no.getLeft()));
+	}
 
-        if (atual.getLeft() == null && atual.getRight() == null) {
-            return 0;
+	final protected ArrayList<No> inorder() {
+		ArrayList<No> ret = new ArrayList<No>();
+		inorder(root, ret);
+		return ret;
+	}
 
-        } else if (atual.getLeft() == null) {
-            return 1 + altura(atual.getRight());
+	final protected void inorder(No no, ArrayList<No> lista) {
+		if (no == null) {
+			return;
+		}
+		inorder(no.getLeft(), lista);
+		lista.add(no);
+		inorder(no.getRight(), lista);
+	}
+	
+	 public void preOrdem()
+	 {
+		 preOrdemFind( root );
+	 }
 
-        } else if (atual.getRight() == null) {
-            return 1 + altura(atual.getLeft());
+	 public void preOrdemFind( No no )
+	 {
+	      if( no == null )
+	       return;
 
-        } else {
-            return 1 + Math.max(altura(atual.getLeft()), altura(atual.getRight()));
-        }
-    }
+	      System.out.println( no.getKey() + "" );
 
-    private void setBalancing(Knot no) {
-        no.setBalancing(altura(no.getRight()) - altura(no.getLeft()));
-    }
+		 preOrdemFind( no.getLeft() );
 
-    final protected ArrayList<Knot> inorder() {
-        ArrayList<Knot> ret = new ArrayList<Knot>();
-        inorder(raiz, ret);
-        return ret;
-    }
+		 preOrdemFind( no.getRight() );
+	  }
 
-    final protected void inorder(Knot no, ArrayList<Knot> lista) {
-        if (no == null) {
-            return;
-        }
-        inorder(no.getLeft(), lista);
-        lista.add(no);
-        inorder(no.getRight(), lista);
-    }
+	public boolean findAVL(No current, int k) {
+		No knot = current;
+
+		if (current == null) {
+			knot = root;
+
+		}
+
+			if (knot.getKey() > k) {
+				return knot.getLeft() != null ? findAVL(knot.getLeft(), k) : false;
+
+			} else if (knot.getKey() < k) {
+				return knot.getRight() != null ? findAVL(knot.getRight(), k) : false;
+
+			} else if (knot.getKey() == k) {
+				return true;
+			}
+
+
+		return false;
+	}
 }
