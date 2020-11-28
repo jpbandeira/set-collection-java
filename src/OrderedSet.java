@@ -42,5 +42,12 @@ public class OrderedSet<V> {
 	public String toString() {
 		return "OrderedSet = " + vList ;
 	}
-    
+
+    public List<V> getList() {
+    	return vList;
+    }
+
+	public V getElement(V i) {
+    	return vList.get((Integer) i);
+	}
 }

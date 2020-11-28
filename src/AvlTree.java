@@ -229,7 +229,7 @@ public class AvlTree {
 		}
 	}
 
-	private int height(No current) {
+	public int height(No current) {
 		if (current == null) {
 			return -1;
 		}
@@ -277,14 +277,14 @@ public class AvlTree {
 	      if( no == null )
 	       return;
 
-	      System.out.println( no.getKey() + "" );
+	      //System.out.println( no.getKey() + "" );
 
 		 preOrdemFind( no.getLeft() );
 
 		 preOrdemFind( no.getRight() );
 	  }
 
-	public boolean findAVL(No current, int k) {
+	public boolean contains(No current, int k) {
 		No knot = current;
 
 		if (current == null) {
@@ -293,10 +293,10 @@ public class AvlTree {
 		}
 
 			if (knot.getKey() > k) {
-				return knot.getLeft() != null ? findAVL(knot.getLeft(), k) : false;
+				return knot.getLeft() != null ? contains(knot.getLeft(), k) : false;
 
 			} else if (knot.getKey() < k) {
-				return knot.getRight() != null ? findAVL(knot.getRight(), k) : false;
+				return knot.getRight() != null ? contains(knot.getRight(), k) : false;
 
 			} else if (knot.getKey() == k) {
 				return true;
@@ -304,5 +304,27 @@ public class AvlTree {
 
 
 		return false;
+	}
+
+	public int findAVL(No current, int k) {
+		No knot = current;
+
+		if (current == null) {
+			knot = root;
+
+		}
+
+		if (knot.getKey() > k) {
+			return knot.getLeft() != null ? findAVL(knot.getLeft(), k) : -1;
+
+		} else if (knot.getKey() < k) {
+			return knot.getRight() != null ? findAVL(knot.getRight(), k) : -1;
+
+		} else if (knot.getKey() == k) {
+			return knot.getKey();
+		}
+
+
+		return -1;
 	}
 }
