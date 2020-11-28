@@ -5,27 +5,28 @@ public class Main {
 
         // 1000, 10000, 100000, 1000000
         // add - remove - contains
-        int n = 10, max = 10, min = 0;
-        Util util = new Util();
+        int n = 1000, max = 1000, min = 0;
         TestSet testSet = new TestSet();
+        Util util = new Util();
+        String typeTest = "Set";
 
         System.out.println();
-        System.out.println("***************************************");
-        System.out.println("Test for ADD -> Set Started");
-        System.out.println("Time Start: " + util.analiseStart());
+        System.out.println("n = " + n);
+        System.out.println("max = " + max);
+        System.out.println("min = " + min);
         System.out.println();
+
+        util.getLogStart(typeTest);
         testSet.testAdd(n,max,min);
-        System.out.println("Time End: " + util.analiseStart());
-        System.out.println("Test for ADD -> Set ENDED");
+        util.getLogEnd(typeTest);
 
         System.out.println();
-        System.out.println("***************************************");
-        System.out.println("Test for REMOVE -> Set Started");
-        System.out.println("Time Start: " + util.analiseStart());
+        System.out.println("*****************************************************");
         System.out.println();
+
+        util.getLogStart(typeTest);
         testSet.testeRemove(n,max,min);
-        System.out.println("Time End: " + util.analiseStart());
-        System.out.println("Test for REMOVE -> Set ENDED");
+        util.getLogEnd(typeTest);
 
        /* System.out.println();
         System.out.println("***************************************");

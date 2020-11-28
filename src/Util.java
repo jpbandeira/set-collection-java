@@ -1,25 +1,21 @@
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Util {
 
-    public String analiseStart() {
+    public String getTime() {
         Date calendar = new Date();
-        String formatado = (new SimpleDateFormat("HH:mm:SS")).format(calendar.getTime());
+        String formatado = (new SimpleDateFormat("HH:mm:ss:SS")).format(calendar.getTime());
         return formatado;
     }
 
-    public void analiseEnd(Long initialTime) {
+    public void getLogStart(String typeTest){
+        System.out.println("Time Start: " + this.getTime());
+        System.out.println("Test for ADD -> " + typeTest + " Started");
+    }
 
-        System.out.println("Tempo de execução total --> "
-                + (System.nanoTime() - initialTime));
-
-        System.out.println("Memória total: "
-                + Runtime.getRuntime().totalMemory());
-
-        // Memória livre
-        System.out.println("Memória livre: "
-                + Runtime.getRuntime().freeMemory());
+    public void getLogEnd(String typeTest){
+        System.out.println("Test for ADD -> " + typeTest + " Ended");
+        System.out.println("Time End: " + this.getTime());
     }
 }

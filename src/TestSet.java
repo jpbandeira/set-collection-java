@@ -8,23 +8,13 @@ public class TestSet {
         int contadorExecucao = 0;
         int tamanho = set.getList().size();
 
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
-        System.out.println("Tamanho " + tamanho);
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
+        System.out.println("Initial Size " + tamanho);
         for (int i = 0; i < n; i++) {
-            System.out.println("Contador: " + ++contadorExecucao);
+            contadorExecucao++;
             set.add((int) (Math.random() * (max - min + 1) + min));
         }
-        System.out.println("***************************************");
-        System.out.println();
-        System.out.println("Tamanho " + set.getList().size());
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
+        System.out.println("Counter: " + contadorExecucao);
+        System.out.println("Final Size " + set.getList().size());
     }
 
     public void testeRemove(int n, int max, int min) {
@@ -32,26 +22,14 @@ public class TestSet {
         int tamanho = set.getList().size();
         int contadorExecucao = 0;
 
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
-        System.out.println("Tamanho " + tamanho);
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
+        System.out.println("Initial Size " + tamanho);
         int i = 0;
         while (i < tamanho) {
-            System.out.println("Contador: " + ++contadorExecucao);
-            System.out.println("Valor: " + set.getElement(0));
-            System.out.println();
+            contadorExecucao++;
             if(set.contains(set.getElement(0))) set.remove(set.getElement(0));
             i++;
         }
-        System.out.println("***************************************");
-        System.out.println();
-        System.out.println("Tamanho " + set.getList().size());
-        System.out.println();
-        System.out.println("***************************************");
-        System.out.println();
+        System.out.println("Counter: " + contadorExecucao);
+        System.out.println("Final Size " + set.getList().size());
     }
 }
