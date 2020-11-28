@@ -11,11 +11,11 @@ public class Util {
 
     public void getLogStart(String typeTest){
         System.out.println("Time Start: " + this.getTime());
-        System.out.println("Test for ADD -> " + typeTest + " Started");
+        System.out.println("Test for ADD -> " + typeTest + " (Started)");
     }
 
     public void getLogEnd(String typeTest){
-        System.out.println("Test for ADD -> " + typeTest + " Ended");
+        System.out.println("Test for ADD -> " + typeTest + " (Ended)");
         System.out.println("Time End: " + this.getTime());
     }
 }
