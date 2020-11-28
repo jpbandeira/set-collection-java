@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Set<V> {
 
-    private final List<V> vList = new ArrayList<>();
+    private List<V> vList = new ArrayList<>();
 
     public boolean add(V value) {
     	if (!vList.contains(value)) {
@@ -22,6 +22,20 @@ public class Set<V> {
     		return false;
     	}
     }
+
+	public List<V> getList () {
+		return vList;
+	}
+
+	public V getElement(int index) {
+    	return vList.get(index);
+	}
+
+	public void printAll () {
+		for(V value : vList){
+			System.out.println(value);
+		}
+	}
     
     public boolean contains (V value) {
     	return vList.contains(value);
