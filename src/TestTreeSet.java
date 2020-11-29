@@ -53,6 +53,28 @@ public class TestTreeSet {
 		System.out.println("Max Counter = " + counter);
 	}
 
+	public void testRemove(int max, int min){
+		int counter = 0;
+		int counterTrue = 0;
+		int counterFalse = 0;
+
+		for (int i = 0; i < max; i++) {
+			counter++;
+			int value = (int) (Math.random() * (max - min + 1) + min);
+			boolean contains = integerAvlSet.remove(value);
+			if (contains) {
+				counterTrue++;
+			} else {
+				counterFalse++;
+			}
+		}
+
+		System.out.println("Counter TRUE = " + counterTrue);
+		System.out.println("Counter FALSE = " + counterFalse);
+		System.out.println("Max Counter for TRUE && FALSE = " + (counterTrue + counterFalse));
+		System.out.println("Max Counter = " + counter);
+	}
+
     public void testFind(int n, int max, int min){
         integerAvlSet.print();
     }

@@ -79,26 +79,25 @@ public class AvlTree {
 		}
 	}
 
-	public void remove(int k) {
-		removeAVL(this.root, k);
+	public boolean remove(int k) {
+		return removeAVL(this.root, k);
 	}
 
-	public void removeAVL(No current, int k) {
+	public boolean removeAVL(No current, int k) {
 		if (current == null) {
-			return;
-
-		} else {
-
-			if (current.getKey() > k) {
-				removeAVL(current.getLeft(), k);
-
-			} else if (current.getKey() < k) {
-				removeAVL(current.getRight(), k);
-
-			} else if (current.getKey() == k) {
-				removeKnotFounded(current);
-			}
+			return false;
 		}
+
+		if (current.getKey() > k) {
+			return removeAVL(current.getLeft(), k);
+		} else if (current.getKey() < k) {
+			return removeAVL(current.getRight(), k);
+		} else if (current.getKey() == k) {
+			removeKnotFounded(current);
+			return true;
+		}
+
+		return false;
 	}
 
 	public void removeKnotFounded(No toRemove) {

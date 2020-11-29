@@ -64,6 +64,10 @@ public class Main {
         testOrderedSet.testeRemove(n,max,min);
         util.getLogEnd(typeTest, action);*/
 
+        System.out.println();
+        System.out.println("************************(3)*****************************");
+        System.out.println();
+
         typeTest = "AvlSet";
         action = "ADD";
         util.getLogStart(typeTest, action);
@@ -88,6 +92,14 @@ public class Main {
         testTreeSet.testFind(n,max,min);
         util.getLogEnd(typeTest, action);
 
+        System.out.println();
+        System.out.println("*****************************************************");
+        System.out.println();
+
+        action = "REMOVE";
+        util.getLogStart(typeTest, action);
+        testTreeSet.testRemove(max,min);
+        util.getLogEnd(typeTest, action);
 
 
 		
