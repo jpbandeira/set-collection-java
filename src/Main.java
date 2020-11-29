@@ -19,11 +19,11 @@ public class Main {
         System.out.println("min = " + min);
         System.out.println();
 
-        System.out.println();
+        /*System.out.println();
         System.out.println("************************(1)*****************************");
         System.out.println();
 
-        /*util.getLogStart(typeTest, action);
+        util.getLogStart(typeTest, action);
         testSet.testAdd(n,max,min);
         util.getLogEnd(typeTest, action);
 
@@ -38,10 +38,10 @@ public class Main {
 
         /*System.out.println();
         System.out.println("************************(2)*****************************");
-        System.out.println();*/
+        System.out.println();
 
         action = "ADD";
-        /*typeTest = "OrderedSet";
+        typeTest = "OrderedSet";
         util.getLogStart(typeTest, action);
         testOrderedSet.testAdd(n,max,min);
         util.getLogEnd(typeTest, action);
